@@ -1,2 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Charan Singh — Portfolio</title>
+  <meta name="description" content="Charan Singh — RPA Developer (UiPath). Portfolio: experience, projects, blog and contact." />
+  <style>
+    /* -------------------------
+       Simple professional dark theme
+       Single-file CSS (customize colors below)
+       ------------------------- */
+    :root{
+      --bg: #0b0f14;
+      --surface: #0f1720;
+      --muted: #9aa4b2;
+      --accent: linear-gradient(90deg,#6d5ef8,#12c2e9);
+      --card: #0f1724;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --text: #e6eef6;
+      --accent-color: #6d5ef8;
+      --success: #22c55e;
+      --transition: 200ms cubic-bezier(.2,.9,.3,1);
+    }
+    .light {
+      --bg: #f7fafc;
+      --surface: #ffffff;
+      --muted: #4b5563;
+      --card: #ffffff;
+      --glass: rgba(2,6,23,0.02);
+      --glass-2: rgba(2,6,23,0.01);
+      --text: #0b1220;
+      --accent-color: #5b21b6;
+    }
 
-<div id="root"></div>
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg,var(--bg), #051021 80%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    /* Splash overlay */
+    .splash {
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      background:linear-gradient(135deg,var(--accent-color) 0%, #0ea5a0 100%);
+      color:white;
+      text-align:center;
+      padding:30px;
+      transition:opacity 360ms ease;
+    }
+    .splash .card{
+      background:rgba(255,255,255,0.06);
+      padding:28px 36px;
+      border-radius:14px;
+      box-shadow:0 6px 30px rgba(2,6,23,0.4);
+      backdrop-filter: blur(6px) saturate(120%);
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .splash h1{margin:0;font-size:28px;letter-spacing:0.2px}
+    .splash p{margin:6px 0 0;font-size:14px;opacity:.92}
+
+    /* Layout */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:48px;height:48px;border-radius:10px;
+      background:linear-gradient(180deg,#7c5cff,#12c2e9);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:16px;
+      box-shadow:0 6px 18px rgba(14,165,233,0.08);
+    }
+    nav{display:flex;gap:10px;align-items:center}
+    nav a{
+      color:var(--text);
+      text-decoration:none;
+      font-size:14px;
+      padding:8px 12px;border-radius:8px;
+      transition: background var(--transition), color var(--transition);
+    }
+    nav a:hover{background:var(--glass);}
+
+    .theme-toggle{
+      border:1px solid rgba(255,255,255,0.06);
+      padding:8px 12px;border-radius:8px;background:transparent;color:var(--text);
+      cursor:pointer;
+    }
+
+    main{max-width:1100px;margin:22px auto;padding:22px;display:grid;grid-template-columns: 1fr 320px;gap:22px;}
+    @media (max-width:900px){ main{grid-template-columns:1fr; padding:16px} nav{display:none}}
+
+    /* Card */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:18px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 24px rgba(2,6,23,0.45);
+    }
+
+    /* Hero */
+    .hero h2{font-size:28px;margin:0 0 6px}
+    .hero p{margin:0 0 12px;color:var(--muted)}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);
+      text-decoration:none;color:var(--text);font-size:14px;background:transparent;
+    }
+    .btn.primary{
+      background:var(--accent);
+      color:#fff;border:none;
+      box-shadow:0 8px 30px rgba(109,94,248,0.12);
+      font-weight:600;
+    }
+
+    /* Right column */
+    aside .contact-line{font-size:14px;color:var(--muted);margin-top:8px}
+    .chip{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;background:var(--glass-2);font-size:13px}
+
+    /* Experience list */
+    .exp-list{display:flex;flex-direction:column;gap:12px}
+    .exp-item{display:flex;gap:12px;align-items:flex-start}
+    .exp-item .meta{font-size:13px;color:var(--muted)}
+    .exp-item ul{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+
+    /* Skills */
+    .skill{
+      display:flex;flex-direction:column;gap:8px;margin-bottom:12px;
+    }
+    .skill .bar{
+      height:12px;background:var(--glass);border-radius:10px;overflow:hidden;
+    }
+    .skill .bar > i{
+      display:block;height:100%;width:0;background:linear-gradient(90deg,#6d5ef8,#12c2e9);
+      border-radius:10px;transition:width 900ms cubic-bezier(.2,.9,.3,1);
+    }
+    .tools{display:flex;flex-wrap:wrap;gap:8px}
+
+    /* Projects & Blog */
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media (max-width:700px){ .grid-2{grid-template-columns:1fr} }
+
+    /* footer */
+    footer{max-width:1100px;margin:30px auto;padding:18px;text-align:center;color:var(--muted);font-size:14px}
+
+    /* small */
+    .muted{color:var(--muted);font-size:13px}
+    a.link{color:var(--accent-color);text-decoration:none}
+  </style>
+</head>
+<body>
+  <!-- Splash -->
+  <div id="splash" class="splash" aria-hidden="false">
+    <div class="card" role="dialog" aria-label="Welcome">
+      <h1>👋 Hello — I&apos;m Charan Singh</h1>
+      <p>Welcome to my portfolio — RPA Developer (UiPath)</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="brand">
+        <div class="logo">CS</div>
+        <div>
+          <div style="font-weight:700">Charan Singh</div>
+          <div style="font-size:13px;color:var(--muted)">RPA Developer — UiPath</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#blogs">Blog</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">Toggle</button>
+        <!-- Replace href with your hosted resume file if you add one -->
+        <a class="btn" href="#" onclick="alert('Replace # with the resume file URL to enable download');return false">Download Resume</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <!-- Left column -->
+    <section>
+      <div class="card hero" style="margin-bottom:18px">
+        <h2>Charan Singh</h2>
+        <p class="muted">RPA Developer with 3.5 years of experience building end-to-end automations using UiPath. Knowledge in HTML, CSS, Kubernetes, ServiceNow, Salesforce; experienced in troubleshooting, debugging and SQL.</p>
+
+        <div class="cta-row" style="margin-top:12px">
+          <a class="btn primary" href="#contact">Hire / Contact</a>
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn" href="#blogs">Read Blog</a>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+          <div class="chip">UiPath • 3.5 yrs</div>
+          <div class="chip">C# • SQL • Automation</div>
+          <div class="chip">Cloud & Troubleshooting</div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div id="experience" class="card" style="margin-bottom:18px">
+        <h3 style="margin-top:0">Experience</h3>
+        <div class="exp-list">
+          <div class="exp-item">
+            <div style="min-width:92px;text-align:left">
+              <div style="font-weight:700">UiPath</div>
+              <div class="meta">Jul 2021 — Aug 2022</div>
+            </div>
+            <div>
+              <div style="font-weight:600">RPA Developer / SME (Bengaluru)</div>
+              <div class="muted">SME for StudioX, Studio, Action Center and UiPath Apps. Cloud migration, internal bots, troubleshooting network & DB issues, enhancements based on customer requirements.</div>
+              <ul>
+                <li>Built internal bots to track customer reports and improvements.</li>
+                <li>Worked on cloud migration for UiPath RPA products.</li>
+                <li>Investigated network and database issues affecting automation.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div style="min-width:92px;text-align:left">
+              <div style="font-weight:700">Cognizant</div>
+              <div class="meta">Mar 2019 — Jul 2021</div>
+            </div>
+            <div>
+              <div style="font-weight:600">RPA Developer (Chennai)</div>
+              <div class="muted">Implemented end-to-end UiPath automations integrating Workday, SAP, QuickBase; queue-based processing and web-API driven report download & processing.</div>
+              <ul>
+                <li>Automated invoice processing: queue reads, SAP entry, acceptance doc generation.</li>
+                <li>Created bots to handle Workday candidate review and QuickBase uploads.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div id="projects" class="card" style="margin-bottom:18px">
+        <h3 style="margin-top:0">Selected Projects</h3>
+        <div class="grid-2" style="margin-top:12px">
+          <div>
+            <div style="font-weight:700">Aura Automation</div>
+            <div class="muted" style="margin-bottom:8px">UiPath, Orchestrator</div>
+            <div class="muted">Template-driven portal automation that logs into Aura, fills data from Excel, generates invoices and stores outputs for business review.</div>
+          </div>
+          <div>
+            <div style="font-weight:700">Invoice_DSD_Process</div>
+            <div class="muted" style="margin-bottom:8px">UiPath, SQL, LTM</div>
+            <div class="muted">SQL-driven invoice extraction, queue processing and KPI report generation saved to a shared drive for validation.</div>
+          </div>
+          <div>
+            <div style="font-weight:700">AE001_BR_SPO_GBS</div>
+            <div class="muted" style="margin-bottom:8px">UiPath, Web API</div>
+            <div class="muted">Downloaded store reports via API, queued jobs, and pushed results to shared drive for business validation.</div>
+          </div>
+          <div>
+            <div style="font-weight:700">Review Hire</div>
+            <div class="muted" style="margin-bottom:8px">UiPath, Workday</div>
+            <div class="muted">Automated hiring review task completion to move candidates into Core HR with consolidated email triggers.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blogs -->
+      <div id="blogs" class="card" style="margin-bottom:18px">
+        <h3 style="margin-top:0">Blog</h3>
+        <div style="display:grid;gap:12px;margin-top:12px">
+          <article>
+            <div style="font-weight:700">Getting started with UiPath Queues</div>
+            <div class="muted" style="font-size:13px;margin-bottom:8px">Jan 12, 2025</div>
+            <p class="muted" style="margin:0">Why queues matter and how to design resilient processing. <em>(Full post placeholder)</em></p>
+          </article>
+          <article>
+            <div style="font-weight:700">RPA Best Practices for Debugging</div>
+            <div class="muted" style="font-size:13px;margin-bottom:8px">Mar 05, 2025</div>
+            <p class="muted" style="margin:0">A checklist to find and fix brittle automations. <em>(Full post placeholder)</em></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right column / aside -->
+    <aside>
+      <div class="card" style="margin-bottom:18px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:68px;height:68px;border-radius:12px;background:linear-gradient(90deg,#6d5ef8,#12c2e9);display:flex;align-items:center;justify-content:center;font-weight:700;color:white">CS</div>
+          <div>
+            <div style="font-weight:700">Charan Singh</div>
+            <div class="muted" style="margin-top:3px">RPA Developer — UiPath</div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="muted">Contact</div>
+          <div class="contact-line">Email: <a class="link" href="mailto:Charanthakur708@gmail.com">Charanthakur708@gmail.com</a></div>
+          <div class="contact-line">Phone: <a class="link" href="tel:+919959787194">+91 9959787194</a></div>
+          <div class="contact-line">Address: Kummarwadi, Mahbubnagar, 509001</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:18px">
+        <div style="font-weight:700">Skills</div>
+        <div style="margin-top:10px">
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between"><span>UiPath</span><span class="muted">90%</span></div>
+            <div class="bar"><i data-width="90"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between"><span>Power Automate</span><span class="muted">70%</span></div>
+            <div class="bar"><i data-width="70"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between"><span>C# / .NET</span><span class="muted">65%</span></div>
+            <div class="bar"><i data-width="65"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between"><span>SQL</span><span class="muted">60%</span></div>
+            <div class="bar"><i data-width="60"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between"><span>HTML / CSS</span><span class="muted">55%</span></div>
+            <div class="bar"><i data-width="55"></i></div>
+          </div>
+
+          <div class="skill">
+            <div style="display:flex;justify-content:space-between"><span>Kubernetes</span><span class="muted">40%</span></div>
+            <div class="bar"><i data-width="40"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:18px">
+        <div style="font-weight:700">Certifications & Education</div>
+        <ul style="margin-top:10px;margin-bottom:0;color:var(--muted);font-size:14px">
+          <li>UiPath Certified Advanced RPA Developer (UiARD)</li>
+          <li>UiPath Certified RPA Associate (UiRPA)</li>
+        </ul>
+
+        <div style="margin-top:10px;color:var(--muted);font-size:14px">
+          <div style="font-weight:600">Education</div>
+          <div style="margin-top:6px">SVITS College — Bachelor (64%)</div>
+          <div>Shraddha College — Intermediate (82%)</div>
+          <div>GBHS School — SSC (92%)</div>
+        </div>
+      </div>
+
+      <div id="contact" class="card">
+        <div style="font-weight:700;margin-bottom:8px">Get in touch</div>
+        <form id="contactForm" onsubmit="event.preventDefault(); contactSubmit();">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input id="name" required placeholder="Your name" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)"/>
+            <input id="email" type="email" required placeholder="Email" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)"/>
+            <textarea id="message" rows="4" placeholder="Message" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)"></textarea>
+            <button class="btn primary" type="submit">Send Message</button>
+          </div>
+        </form>
+        <div id="contactNote" style="margin-top:10px;color:var(--muted);font-size:13px">Or email me at <a class="link" href="mailto:Charanthakur708@gmail.com">Charanthakur708@gmail.com</a></div>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Charan Singh — Built with plain HTML, CSS & JS
+  </footer>
+
+  <script>
+    // Theme toggle with persistence
+    (function(){
+      const body = document.documentElement;
+      const stored = localStorage.getItem('site-theme');
+      if(stored === 'light') body.classList.add('light');
+      const toggle = document.getElementById('themeToggle');
+      function updateToggle(){
+        const isLight = body.classList.contains('light');
+        toggle.innerText = isLight ? 'Dark' : 'Light';
+        toggle.setAttribute('aria-pressed', String(isLight));
+      }
+      toggle.addEventListener('click', () => {
+        body.classList.toggle('light');
+        const isLight = body.classList.contains('light');
+        localStorage.setItem('site-theme', isLight ? 'light' : 'dark');
+        updateToggle();
+      });
+      updateToggle();
+    })();
+
+    // Splash auto-hide
+    (function(){
+      const splash = document.getElementById('splash');
+      setTimeout(() => {
+        if(!splash) return;
+        splash.style.opacity = '0';
+        splash.style.pointerEvents = 'none';
+        setTimeout(()=> splash.remove(), 420);
+      }, 2000); // 2000ms = 2 seconds
+    })();
+
+    // Skills animation on load & when scrolled into view
+    (function(){
+      function animateSkills(){
+        document.querySelectorAll('.skill .bar i').forEach(function(el){
+          const w = el.getAttribute('data-width') || '60';
+          // small delay for nicer effect
+          setTimeout(()=> el.style.width = w + '%', 120);
+        });
+      }
+      // animate after small delay and also when visible on scroll
+      setTimeout(animateSkills, 320);
+      window.addEventListener('scroll', animateSkills, {passive:true});
+    })();
+
+    // Contact form simulated submit (replace with your endpoint or email service)
+    function contactSubmit(){
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name || !email || !message){
+        alert('Please fill all fields.');
+        return;
+      }
+      // For now we simulate success. Replace with fetch() to an endpoint or EmailJS/Netlify form.
+      alert('Thanks, ' + name + '! Your message was received (simulation).');
+      document.getElementById('contactForm').reset();
+    }
+
+    // footer year
+    document.getElementById('year').innerText = new Date().getFullYear();
+  </script>
+</body>
+</html>
